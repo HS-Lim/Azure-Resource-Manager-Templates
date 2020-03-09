@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+
+    "parameters": {
+        "appServicePlanPrefix": {
+            "type": "string"
+        },
+        "webAppPrefix": {
+            "type": "string"
+        },
+        "linuxFxVersion": {
+            "type": "string",
+            "defaultValue" : "python|3.8"
+        }
+    },
+
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "appServicePlanName": "[concat(parameters('appServicePlanPrefix'), uniqueString(resourceGroup().id))]",
+        "webAppName": "[concat(parameters('webAppPrefix'), uniqueString(resourceGroup().id))]"
+    },
+
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2018-02-01",
+            "name": "[variables('appServicePlanName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "B1",
+                "tier": "Basic",
+                "size": "B1",
+                "family": "B",
+                "capacity": 1
+            },
+            "tags": {
+                "Environment": "Development"
+            },
+            "kind": "linux",
+            "properties": {
+                "perSiteScaling": false,
+                "reserved": true,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[variables('webAppName')]",
+            "location": "[variables('location')]",
+            "kind": "app",
+            "dependsOn": [
+                "[resourceID('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+                
+            ],
+            "tags": {
+                "Environment": "Development"
+            },
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+                "siteConfig": {
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]"
+                }
+            }
+        }
+    ],
+
+    "outputs": {
+        "webAppName": {
+            "type": "string",
+            "value": "[variables('webAppName')]"
+        },
+        "appSerivcePlanName": {
+            "type": "string",
+            "value": "[variables('appServicePlanName')]"
+        }
+    }
+}
