@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "appServicePlanPrefix": {
-             "value": "prt-plan"
+            "value": "prt-plan"
         },
         "webAppPrefix": {
-             "value": "prt-webapp"
+            "value": "prt-webapp"
         },
         "linuxFxVersion": {
             "value": "python|3.8"

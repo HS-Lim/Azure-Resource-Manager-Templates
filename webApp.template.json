@@ -12,11 +12,14 @@
         "linuxFxVersion": {
             "type": "string",
             "defaultValue" : "python|3.8"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue" : "[resourceGroup().location]"
         }
     },
 
     "variables": {
-        "location": "[resourceGroup().location]",
         "appServicePlanName": "[concat(parameters('appServicePlanPrefix'), uniqueString(resourceGroup().id))]",
         "webAppName": "[concat(parameters('webAppPrefix'), uniqueString(resourceGroup().id))]"
     },
@@ -26,7 +29,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2018-02-01",
             "name": "[variables('appServicePlanName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "sku": {
                 "name": "B1",
                 "tier": "Basic",
@@ -49,7 +52,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
             "name": "[variables('webAppName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "kind": "app",
             "dependsOn": [
                 "[resourceID('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
