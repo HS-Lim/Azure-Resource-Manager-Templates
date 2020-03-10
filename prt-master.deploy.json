@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "name": "linkedTemplate",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri":"https://raw.githubusercontent.com/HS-Lim/Azure-Resource-Manager-Templates/master/web-sql.deploy.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parametersLink": {
+              "uri": "https://raw.githubusercontent.com/HS-Lim/Azure-Resource-Manager-Templates/master/web-sql.parameters.json",
+              "contentVersion": "1.0.0.0"
+          }
+        }
+      }
+    ],
+    "outputs": {
+    }
+  }

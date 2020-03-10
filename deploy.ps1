@@ -1,5 +1,5 @@
-$templatePath = './web-sql.deployment.json'
-$parameterPath = './web-sql.parameters.json'
+$templatePath = './prt-master.deploy.json'
+$parameterPath = './prt-master.parameters.json'
 
 #Define functions here
 function createRG {
@@ -13,8 +13,8 @@ function createRG {
 function deployTemplate {
     Write-Host "Deploying template at $templatePath"
     New-AzResourceGroupDeployment `
-    -Name sqlserverdeployment1 `
-    -ResourceGroupName secondaryPRT-RG `
+    -Name master-deployment `
+    -ResourceGroupName primaryPRT-RG `
     -TemplateFile $templatePath `
     -TemplateParameterFile $parameterPath
 }
