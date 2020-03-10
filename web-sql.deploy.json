@@ -50,6 +50,7 @@
         "sqlServerName": "[concat(parameters('sqlServerPrefix'), uniqueString(resourceGroup().id))]",
         "databaseName": "[concat(parameters('databasePrefix'), uniqueString(resourceGroup().id))]",
         "appServicePlanName": "[concat(parameters('appServicePlanPrefix'), uniqueString(resourceGroup().id))]",
+        //"appServicePlanName": "[concat(parameters('appServicePlanPrefix'), uniqueString(resourceGroup().id))]",
         "webAppName": "[concat(parameters('webAppPrefix'), uniqueString(resourceGroup().id))]",
         "databaseEdition": "Basic",
         "databaseCollation": "SQL_Latin1_General_CP1_CI_AS",
