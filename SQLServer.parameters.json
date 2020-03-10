@@ -6,7 +6,7 @@
             "value": "eden"
         },
         "sqlAdministratorLoginPassword": {
-            "value": "OccamsRazor1!"
+            "value": "password1!"
         },
         "transparentDataEncryption": {
             "value": "Enabled"
