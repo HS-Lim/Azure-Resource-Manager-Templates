@@ -1,5 +1,5 @@
-$templatePath = './webApp.template.json'
-$parameterPath = './webApp.parameters.json'
+$templatePath = './web-sql.deployment.json'
+$parameterPath = './web-sql.parameters.json'
 
 #Define functions here
 function createRG {
