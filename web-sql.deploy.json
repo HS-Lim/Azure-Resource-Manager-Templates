@@ -49,11 +49,11 @@
     "variables": {
         "sqlServerName": "[concat(parameters('sqlServerPrefix'), uniqueString(resourceGroup().id))]",
         "databaseName": "[concat(parameters('databasePrefix'), uniqueString(resourceGroup().id))]",
+        "appServicePlanName": "[concat(parameters('appServicePlanPrefix'), uniqueString(resourceGroup().id))]",
+        "webAppName": "[concat(parameters('webAppPrefix'), uniqueString(resourceGroup().id))]",
         "databaseEdition": "Basic",
         "databaseCollation": "SQL_Latin1_General_CP1_CI_AS",
-        "databaseServiceObjectiveName": "Basic",
-        "appServicePlanName": "[concat(parameters('appServicePlanPrefix'), uniqueString(resourceGroup()).id)]",
-        "webAppName": "[concat(parameters('webAppPrefix'), uniqueString(resourceGroup().id))]"
+        "databaseServiceObjectiveName": "Basic"
     },
     "resources": [
         {
@@ -160,7 +160,7 @@
             },
             "resources": [
                 {
-                    "apiVersion": "2018-02-01",
+                    "apiVersion": "2018-11-01",
                     "type": "config",
                     "name": "connectionstrings",
                     "dependsOn": [
