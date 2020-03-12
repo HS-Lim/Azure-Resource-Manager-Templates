@@ -194,6 +194,5 @@
             "type": "string",
             "value": "[variables('appServicePlanName')]"
         }
-
     }
 }

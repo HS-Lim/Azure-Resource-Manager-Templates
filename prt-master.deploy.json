@@ -12,7 +12,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "name": "primaryLink",
+            "name": "sql-web-primary-deployment",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -28,14 +28,18 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "name": "iterationLinkStart",
+            "name": "[concat('sql-web-deployment-', copyIndex())]",
             "resourceGroup": "[parameters('secondaryResourceGroups')[copyIndex()]]",
             "copy": {
-                "name": "[concat('iterationLink-', copyIndex())]",
+                //You're not supposed to put copyIndex here.
+                "name": "sql-web-copy",
                 "count": "[length(parameters('secondaryResourceGroups'))]"
             },
             "properties": {
                 "mode": "Incremental",
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
                 "templateLink": {
                     "uri": "https://raw.githubusercontent.com/HS-Lim/Azure-Resource-Manager-Templates/master/web-sql.deploy.json",
                     "contentVersion": "1.0.0.0"
@@ -44,7 +48,37 @@
                     "uri": "https://raw.githubusercontent.com/HS-Lim/Azure-Resource-Manager-Templates/master/web-sql.parameters.json",
                     "contentVersion": "1.0.0.0"
                 }
-            }
+            },
+            "dependsOn": [
+                //Wait for first deployment of sql-web to make geo-rep easier.
+                "[resourceId('Microsoft.Resources/deployments', 'sql-web-primary-deployment')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "frontdoor-deployment",
+            "properties": {
+                "mode": "Incremental",
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "templateLink": {
+                    "uri": "filler",
+                    "contentVersion": "1.0.0.0"
+                },
+                //
+                "parameters": {
+                    "environment": {
+
+                    }
+                }
+            },
+            "dependsOn": [
+                //How do I wait on last deployment?
+                "sql-web-copy"
+            ]
+
         }
     ],
     "outputs": {

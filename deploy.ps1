@@ -13,7 +13,7 @@ function createRG {
 function deployTemplate {
     Write-Host "Deploying template at $templatePath"
     New-AzResourceGroupDeployment `
-    -Name master-deployment `
+    -Name master-deployment-final `
     -ResourceGroupName primaryPRT-RG `
     -TemplateFile $templatePath `
     -TemplateParameterFile $parameterPath
